@@ -32,12 +32,34 @@ class Module:
     def train(self) -> None:
         "Set the mode of this module and all descendent modules to `train`."
         # TODO: Implement for Task 0.4.
-        raise NotImplementedError('Need to implement for Task 0.4')
+        self.training = True
+        # if there is no descendent module, return
+        if not self._modules:
+            return
+        
+        # otherwise, 
+        for child_module in self._modules.values():
+            child_module.train()
+
+        return
 
     def eval(self) -> None:
         "Set the mode of this module and all descendent modules to `eval`."
         # TODO: Implement for Task 0.4.
-        raise NotImplementedError('Need to implement for Task 0.4')
+        # if there is no descendent module, return
+
+        self.training = False
+        if not self._modules:
+            return
+        
+        # otherwise, 
+        for child_module in self._modules.values():
+            child_module.eval()
+
+        return
+    
+    
+
 
     def named_parameters(self) -> Sequence[Tuple[str, Parameter]]:
         """
@@ -48,12 +70,29 @@ class Module:
             The name and `Parameter` of each ancestor parameter.
         """
         # TODO: Implement for Task 0.4.
-        raise NotImplementedError('Need to implement for Task 0.4')
+        res = {}
+
+        def helper(name, node):
+            prefix = name + "." if name else ""
+            # Add all parameters of the node to the list
+            for k, v in node._parameters.items():
+                res[prefix + k] = v
+            # recursively call all descendents
+            for k, v in node._modules.items():
+                helper(prefix + k, v)
+
+        helper("", self)
+        return res
+    
+
+    
 
     def parameters(self) -> Sequence[Parameter]:
         "Enumerate over all the parameters of this module and its descendents."
         # TODO: Implement for Task 0.4.
-        raise NotImplementedError('Need to implement for Task 0.4')
+        return self.named_parameters().values()
+        
+        
 
     def add_parameter(self, k: str, v: Any) -> Parameter:
         """
@@ -118,6 +157,7 @@ class Module:
 
 
 class Parameter:
+
     """
     A Parameter is a special container stored in a `Module`.
 
