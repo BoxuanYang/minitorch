@@ -1,5 +1,8 @@
 import networkx as nx
 
+import sys
+sys.path.append("/home/kevin/minitorch")
+
 import minitorch
 
 if hasattr(minitorch, "Scalar"):
