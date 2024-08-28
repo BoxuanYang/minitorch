@@ -31,7 +31,7 @@ def add(x: float, y: float) -> float:
 def neg(x: float) -> float:
     "$f(x) = -x$"
     # TODO: Implement for Task 0.1.
-    return -x
+    return x * -1.0
 
 
 def lt(x: float, y: float) -> float:
@@ -91,7 +91,7 @@ def relu(x: float) -> float:
     # TODO: Implement for Task 0.1.
     if x > 0:
         return x
-    return 0
+    return 0.0
 
 
 EPS = 1e-6
@@ -122,7 +122,7 @@ def inv(x: float) -> float:
 def inv_back(x: float, d: float) -> float:
     r"If $f(x) = 1/x$ compute $d \times f'(x)$"
     # TODO: Implement for Task 0.1.
-    return d * (-1) / (x ** 2)
+    return d * (-1.0) / (x ** 2)
 
 
 def relu_back(x: float, d: float) -> float:
